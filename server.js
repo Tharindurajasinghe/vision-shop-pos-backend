@@ -19,6 +19,10 @@ app.get('/api/ping', (req, res) => {
 // Connect to MongoDB
 connectDB();
 
+//auto create month summary cron job
+const scheduleMonthlySummary = require('./cron/monthlySummaryCron');
+scheduleMonthlySummary();
+
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/products', require('./routes/products'));

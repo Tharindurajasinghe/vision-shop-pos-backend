@@ -73,30 +73,6 @@ const createMonthlySummary = async (req, res) => {
     const month = today.format('YYYY-MM');
     const monthName = today.format('MMMM YYYY');
     
-    // Create or update monthly summary
-    let monthlySummary = await MonthlySummary.findOne({ month });
-    
-    if (monthlySummary) {
-      monthlySummary.items = Array.from(itemsMap.values());
-      monthlySummary.totalIncome = totalIncome;
-      monthlySummary.totalProfit = totalProfit;
-      monthlySummary.startDate = past30Days.format('YYYY-MM-DD');
-      monthlySummary.endDate = today.format('YYYY-MM-DD');
-      monthlySummary.daysIncluded = bills.length > 0 ? 
-        today.diff(moment(bills[0].date), 'days') + 1 : 0;
-    } else {
-      monthlySummary = new MonthlySummary({
-        month,
-        monthName,
-        items: Array.from(itemsMap.values()),
-        totalIncome,
-        totalProfit,
-        startDate: past30Days.format('YYYY-MM-DD'),
-        endDate: today.format('YYYY-MM-DD'),
-        daysIncluded: bills.length > 0 ? 
-          today.diff(moment(bills[0].date), 'days') + 1 : 0
-      });
-    }
     
     await monthlySummary.save();
     
@@ -167,7 +143,6 @@ const getAvailableDates = async (req, res) => {
 
 module.exports = {
   getDailySummary,
-  createMonthlySummary,
   getMonthlySummary,
   getAllMonthlySummaries,
   getAvailableDates

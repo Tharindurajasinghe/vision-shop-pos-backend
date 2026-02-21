@@ -3,7 +3,6 @@ const router = express.Router();
 const { authenticateToken } = require('../middleware/authMiddleware');
 const {
   getDailySummary,
-  createMonthlySummary,
   getMonthlySummary,
   getAllMonthlySummaries,
   getAvailableDates
@@ -13,9 +12,6 @@ router.use(authenticateToken);
 
 // Get daily summary by date
 router.get('/daily/:date', getDailySummary);
-
-// Create monthly summary
-router.post('/monthly/create', createMonthlySummary);
 
 // Get monthly summary by month
 router.get('/monthly/:month', getMonthlySummary);
